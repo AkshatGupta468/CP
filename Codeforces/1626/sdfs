@@ -1,0 +1,1 @@
+cd "d:\CP\Programs\Codeforces\1626\" ; if ($?) { g++ A.cpp -o A } ; if ($?) { .\A }
