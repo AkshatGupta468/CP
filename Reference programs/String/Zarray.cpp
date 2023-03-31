@@ -18,12 +18,20 @@ template<class T>
 void _dprint(T a) { cerr << a; }
 bool solve()
 {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    for (int i = 0;i < n;i++) {
-        cin >> a[i];
+    string s;
+    cin >> s;
+    int n = s.length();
+    vector<int> z(n);
+    for (int i = 1, l = 0, r = 0;i < n;i++) {
+        if (i <= r) z[i] = min(r - i + 1, z[i - l]);
+        while (i + z[i] < n && s[z[i]] == s[i + z[i]])z[i]++;
+        if (i + z[i] - 1 > r) l = i, r = i + z[i] - 1;
     }
+    debug(z);
+    for (int i = n - 1;i > 0;i--) {
+        if (z[i] == n - i)cout << z[i] << ' ';
+    }
+    cout nl;
     return true;
 }
 
@@ -41,7 +49,7 @@ int main()
     freopen((path + "error.txt").c_str(), "w", stderr);
 #endif
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) {
         solve();
         // cout << (solve() ? "YES\n" : "NO\n");

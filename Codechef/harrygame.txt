@@ -1,0 +1,11 @@
+Harry is playing a game.
+the game is as follows :
+There are n bases arranged as a row in a map. Each base get its power from the base next to it and nth base has the powerhouse . Each base has a defense system of strength a[i]. The player has only a single bomb with attack strength X. This bomb can destroy any base of defense system strictly less than it. But there is one more weakness of the bases if the bases stop getting power they get self destroyed. if we destroy the ith base the i-1th base stop recieving power (also not able to supply power to other base).
+What is the maximum number of bases harry can destroy?
+
+
+sample
+n=8,x=6;
+a={4,1,6,1,6,5,6,8}
+output
+6

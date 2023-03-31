@@ -50,12 +50,8 @@ void solve()
 {
     ll n, m, k;
     cin >> n >> m >> k;
-    vector<ll> a(n + 1);
-    for (ll i = 1;i <= n;i++) {
-        cin >> a[i];
-    }
     vector<ll> adj[n + 1];
-    for (ll i = 0;i < n - 1;i++) {
+    for (ll i = 0;i < m;i++) {
         ll u, v;
         cin >> u >> v;
         adj[u].push_back(v);

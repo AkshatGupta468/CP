@@ -31,6 +31,7 @@ vector<vector<int>> subsets_generate(vector<int>& arr)
     }
     return subsets;
 }
+//https://codeforces.com/blog/entry/45223
 // Given a fixed array A of 2^N integers, we need to calculate ∀ x function F(x) = Sum of all A[i] such that x&i = i, i.e., i is a subset of x.
 void fun() {
     // Bruteforce:Timecomplexity : O(2^N)
