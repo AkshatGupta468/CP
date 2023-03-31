@@ -1,11 +1,12 @@
+
 class binruplift {
 public:
     int n;
     vector<vector<int>> anc;
+    vector<int> decHead;
     vector<int> height;
     int sz;
-    binruplift(int tn, vector<int>& p) {
-        n = tn;
+    binruplift(int n, vector<int> p):decHead(p), n(n) {
         height.resize(n + 1, -1);
         anc_precomp(p);
         sz = anc[0].size() - 1;
@@ -14,6 +15,8 @@ public:
             if (height[i] < 0)calht(i, height, p);
         }
     }
+    binruplift() {}
+
     int kthancestor(int k, int x) {
         int j = 0;
         while (k > 0) {
@@ -23,7 +26,7 @@ public:
         }
         return x;
     }
-    
+
     void anc_precomp(vector<int>& p) {
         anc.resize(n + 1);
         anc[0].push_back(0);
@@ -56,5 +59,9 @@ public:
             return findlcarec(a, b, r - 1);
         }
         else return findlcarec(anc[a][r - 1], anc[b][r - 1], r - 1);
+    }
+    int getDistance(int u, int v) {
+        int l = findlca(u, v);
+        return height[u] + height[v] - 2 * height[l];
     }
 };
