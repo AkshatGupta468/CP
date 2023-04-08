@@ -15,8 +15,6 @@ int main() {
     A.insert(4);
     A.insert(5);
     A.insert(5);
-    A.insert(6);
-    A.insert(6);
     A.insert(7);
     A.insert(8);
     A.insert(9);
