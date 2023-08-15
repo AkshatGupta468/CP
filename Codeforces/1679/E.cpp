@@ -22,71 +22,86 @@ void solve()
     cin >> n;
     string s;
     cin >> s;
-    int charmax = 3;
+    int dtot = count(s.begin(), s.end(), '?');
+
+    int charmax = 17;
     int sz = (1 << charmax);
-    vector<ll> ans(sz);
-    for (int i = 0;i < n;i++) {
-        ll mask = 0;
-        ans[0]++;
-        ll currans = 0;
-        for (int l = 1;i - l >= 0 && i + l < n ;l++) {
-            if (s[i - l] != '?' && s[i + l] != '?' && (s[i - l] != s[i + l])) {
-                    if (s[i - l] != s[i + l - 1]) 
-                    break;
-            }
-            else if (s[i - l] == '?' && s[i + l - 1] == '?') {
-            }
-            else if (s[i - l] == '?') {
-                mask = (mask | (1 << int(s[i + l] - 'a')));
-            }
-            else if (s[i + l] == '?') {
-                mask = (mask | (1 << int(s[i - l] - 'a')));
-            }
-            cerr << mask sp i sp l nl;
-            ans[mask] ++;
+    vector<vector<ll>> ans(charmax + 1, vector<ll>(sz));
+    for (ll q = 0;q <= charmax;q++) {
+        vector<ll> qpow(dtot + 1, 1ll);
+        for (ll i = 1;i < qpow.size();i++) {
+            qpow[i] = (qpow[i - 1] * q) % MOD;
         }
-    }
-    cerr<<"--\n";
-    for (int i = 0;i < n;i++) {
-        ll mask = 0;
-        ll currans = 0;
-        for (int l = 1;i - l >= 0 && i + l - 1 < n;l++) {
-            if (s[i - l] != '?' && s[i + l - 1] != '?') {
-                if (s[i - l] != s[i + l - 1]) 
-                    break;
+        for (ll i = 0;i < n;i++) {
+            ll mask = 0;
+            ll currans = 0;
+            ll f = 0, d = dtot;
+
+            ans[q][mask] = (ans[q][mask] + qpow[d + f]) % MOD;
+            for (ll l = 1;i - l >= 0 && i + l < n;l++) {
+                if (s[i - l] != '?' && s[i + l] != '?') {
+                    if (s[i - l] != s[i + l])
+                        break;
+                }
+                else if (s[i - l] == '?' && s[i + l] == '?') {
+                    f++;
+                    d -= 2;
+                }
+                else if (s[i - l] == '?') {
+                    d--;
+                    mask = (mask | (1 << (ll)(s[i + l] - 'a')));
+                }
+                else if (s[i + l] == '?') {
+                    d--;
+                    mask = (mask | (1 << (ll)(s[i - l] - 'a')));
+                }
+                ans[q][mask] = (ans[q][mask] + qpow[d + f]) % MOD;
             }
-            else if (s[i - l] == '?' && s[i + l - 1] == '?') {
-            }
-            else if (s[i - l] == '?') {
-                mask = (mask | (1 << int(s[i + l - 1] - 'a')));
-            }
-            else if (s[i + l - 1] == '?') {
-                mask = (mask | (1 << int(s[i - l] - 'a')));
-            }
-            cerr << mask sp i sp l nl;
-            ans[mask] ++;
         }
-    }
-    for (int i = 0;i < sz;i++) {
+        for (ll i = 0;i < n;i++) {
+            ll mask = 0;
+            ll currans = 0;
+            ll f = 0, d = dtot;
+            for (ll l = 1;i - l >= 0 && i + l - 1 < n;l++) {
+                if (s[i - l] != '?' && s[i + l - 1] != '?') {
+                    if (s[i - l] != s[i + l - 1])
+                        break;
+                }
+                else if (s[i - l] == '?' && s[i + l - 1] == '?') {
+                    f++;
+                    d -= 2;
+                }
+                else if (s[i - l] == '?') {
+                    d--;
+                    mask = (mask | (1 << int(s[i + l - 1] - 'a')));
+                }
+                else if (s[i + l - 1] == '?') {
+                    d--;
+                    mask = (mask | (1 << int(s[i - l] - 'a')));
+                }
+                ans[q][mask] = (ans[q][mask] + qpow[d + f]) % MOD;
+            }
+        }
         for (int j = 0;j < charmax;j++) {
-            int v = (1 << j);
-            if (i & v)
-                ans[i] = (ans[i] + ans[(i ^ v)])%MOD;
+            for (int i = 0;i < sz;i++) {
+                int v = (1 << j);
+                if (i & v) {
+                    ans[q][i] = (ans[q][i] + ans[q][(i ^ v)]) % MOD;
+                }
+            }
         }
-        cerr << ans[i] << " ";
     }
-    cerr nl;
     int q;
     cin >> q;
     while (q--)
     {
         string s;
         cin >> s;
-        int mask = 0;
+        ll mask = 0;
         for (int i = 0;i < s.length();i++) {
-            mask = (mask | (1 << int(s[i] - 'a')));
+            mask = (mask | (1ll << (ll)(s[i] - 'a')));
         }
-        cout << ans[mask] nl;
+        cout << ans[__builtin_popcount(mask)][mask] nl;
     }
 }
 int main()

@@ -19,7 +19,7 @@ void fft(vector<cd>& a, bool invert) {
     for (int i = 0; 2 * i < n; i++) {
         a[i] = a0[i] + w * a1[i];
         a[i + n / 2] = a0[i] - w * a1[i];
-        if (invert) {
+        if (invert) {   
             a[i] /= 2;
             a[i + n / 2] /= 2;
         }

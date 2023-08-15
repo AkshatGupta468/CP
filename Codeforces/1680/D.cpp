@@ -13,47 +13,61 @@ using namespace std;
 #define debug(n)
 #endif
 template<class T>
-void _dprint(vector<T> a){display(a)};
+void _dprint(vector<T> a) { display(a) };
 template<class T>
-void _dprint(T a){cerr<<a<<"\n";}
+void _dprint(T a) { cerr << a << "\n"; }
+ll n, k;
+ll getans(vector<ll> a) {
+    ll s = 0, cnt = 0;
+    for (ll j = n;j > 0;j--) {
+        cnt += (a[j] == 0);
+        s += a[j];
+    }
+    ll fsum = 0, ans = -1;
+    for (ll j = 1;j <= n;j++) {
+        if (s - k * cnt > 0 || s + k * cnt < 0)break;
+        if (a[j] == 0) {
+            cnt--;
+            ll x = min(k, k * cnt - s);
+            s += x;
+            fsum += x;
+        }
+        else fsum += a[j];
+        ans = max(ans, fsum + 1);
+    }
+    return ans;
+}
 void solve()
 {
-    ll n,k;
-    cin>>n>>k;
-    vector<ll> a(n+1),prefcnt(n+1),prefsum(n+1);
-    for(ll i=1;i<=n;i++){
-        cin>>a[i];
-        prefsum[i]+=prefsum[i-1]+a[i];
-        prefcnt[i]+=prefcnt[i-1]+(a[i]==0);
+    cin >> n >> k;
+    vector<ll> a(2 * n + 1);
+    for (ll i = 1;i <= n;i++) {
+        cin >> a[i];
+        a[i + n] = a[i];
     }
-    ll ans=0;
-    for(ll i=0;i<n;i++){
-        for(ll j=i;j<n;j++){
-            if(prefcnt[i]>prefcnt[j]-prefcnt[i])continue;
-            ll t
-            ans=max(ans,
-                (prefsum[i]+prefcnt[i]*k) - (prefsum[j]-(prefcnt[j]-2*prefcnt[i])*k));
-           ans=max(ans,0(prefsum[j]+(prefcnt[j]-2*prefcnt[i])*k) - (prefsum[i]-prefcnt[i]*k));
+    ll ans = -1;
+    for (ll i = 0;i < n;i++) {
+        vector<ll> b(n + 1);
+        for (ll j = i + 1;j <= i + n;j++) {
+            b[j - i] = a[j];
         }
+        ans = max(ans, getans(b));
     }
-
+    cout << ans nl;
 }
 
 int main()
 {
-        fast_io;
-     #ifdef __linux__
-        string path="/mnt/3C401CB3401C75BC/CP/";
-     #elif _WIN32
-        string path="D:/CP/";
-     #endif
-     #ifndef ONLINE_JUDGE
-        freopen((path+"input.txt").c_str(), "r", stdin);
-        freopen((path+"output.txt").c_str(), "w", stdout);
-        freopen((path +"error.txt").c_str(),"w",stderr);
-    #endif
-    int t;
-    cin>>t;
-    while(t--)
-        solve();
+    fast_io;
+#ifdef __linux__
+    string path = "/mnt/3C401CB3401C75BC/CP/";
+#elif _WIN32
+    string path = "D:/CP/";
+#endif
+#ifndef ONLINE_JUDGE
+    freopen((path + "input.txt").c_str(), "r", stdin);
+    freopen((path + "output.txt").c_str(), "w", stdout);
+    freopen((path + "error.txt").c_str(), "w", stderr);
+#endif
+    solve();
 }

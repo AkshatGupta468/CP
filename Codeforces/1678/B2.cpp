@@ -16,58 +16,37 @@ template<class T>
 void _dprint(vector<T> a) { display(a) };
 template<class T>
 void _dprint(T a) { cerr << a << "\n"; }
+int getans(string s, int n, int start) {
+    int cnt[2]{};
+    cnt[start] = 1e6;
+    cnt[!start] = 1;
+    for (int i = 0;i < n;i += 2) {
+        if (s[i] == s[i + 1]) {
+            int v = s[i] - '0';
+            cnt[v] = min(cnt[v], 1 + cnt[!v]);
+            cnt[!v] = 1e6;
+        }
+        else {
+            int tcnt[2]{};
+            tcnt[0] = min(cnt[0], 1 + cnt[1]);
+            tcnt[1] = min(1 + cnt[0], cnt[1]);
+            cnt[0] = tcnt[0];
+            cnt[1] = tcnt[1];
+        }
+    }
+    return min(cnt[0], cnt[1]);
+}
 void solve()
 {
     int n;
     cin >> n;
-    string s;cin >> s;
-    vector<int> len{ 1 };
-    for (int i = 1;i < n;i++) {
-        if (s[i] == s[i - 1]) {
-            (*len.rbegin())++;
-        }
-        else len.push_back(1);
-    }
-    bool flag = false;
+    string s;
+    cin >> s;
     int ans = 0;
-    for (int i = 0;i < len.size();i++) {
-        if (flag) {
-            if (len[i] % 2)flag = false;
-            else  ans++;
-        }
-        else if (len[i] % 2) {
-            flag = true;
-            ans++;
-        }
+    for (int i = 0;i < n;i += 2) {
+        ans += (s[i] != s[i + 1]);
     }
-    
-
-    int sec = len.size();
-    for (int i = 0;i < len.size();i++) {
-        if (flag) {
-            if (len[i] == 2) {
-                if(i<len.size()-1)len[i+1]+=len[i];
-                if(i>0)len[i-1]+=len[i];
-                sec -= 2;
-            }
-            if (len[i] % 2)flag = false;
-        }
-        else if (len[i] % 2) {
-            // if(len[i]==1){
-            //     if(i<n-1){
-            //         len[i+1]++;
-            //         if(i>0)len[i+1]+=len[i-1];
-            //     }
-            // }
-            flag = true;
-        }
-    }
-    for(int i=0;i<n;i++){
-        if(len[i]==1){
-            sec-=1+(i>0 && i<len.size()-1);
-        }
-    }
-    cout << ans sp sec nl;
+    cout << ans sp min(getans(s, n, 0), getans(s, n, 1)) nl;
 }
 
 int main()

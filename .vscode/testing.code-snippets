@@ -1,0 +1,14 @@
+{
+	"": {
+		"prefix": "testing",
+		"body": [
+			"class testing {",
+			"    int n;",
+			"    void print() {",
+			"        cout << n << endl;",
+			"    }",
+			"};"
+		],
+		"description": ""
+	}
+}

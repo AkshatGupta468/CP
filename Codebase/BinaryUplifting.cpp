@@ -3,10 +3,9 @@ class binruplift {
 public:
     int n;
     vector<vector<int>> anc;
-    vector<int> decHead;
     vector<int> height;
     int sz;
-    binruplift(int n, vector<int> p):decHead(p), n(n) {
+    binruplift(int n, vector<int> p): n(n) {
         height.resize(n + 1, -1);
         anc_precomp(p);
         sz = anc[0].size() - 1;
