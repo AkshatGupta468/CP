@@ -42,6 +42,23 @@
                 "isDefault": true
             },
             "detail": "compiler: C:\\msys64\\mingw64\\bin\\cpp.exe"
+        },
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "/opt/homebrew/bin/g++-14",   // Path to GCC 14 installed by Homebrew
+            "args": [
+                "-std=c++20",                        // C++20 standard
+                "-g",                                // Debugging info (optional)
+                "${workspaceFolder}/main.cpp",        // Your source file
+                "-o", "${workspaceFolder}/main"       // Output executable
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "Generated task to build with GCC 14"
         }
     ],
     "version": "2.0.0"

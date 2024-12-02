@@ -95,17 +95,28 @@
     },
     "code-runner.defaultLanguage": "cpp",
     "C_Cpp.codeAnalysis.clangTidy.enabled": true,
-    "githubPullRequests.ignoredPullRequestBranches": [
-        "master"
-    ],
-    "C_Cpp.default.compilerPath": "/usr/bin/g++",
-    "C_Cpp.intelliSenseEngineFallback": "enabled",
-    "C_Cpp.default.intelliSenseMode": "",
+    "C_Cpp.default.compilerPath": "/opt/homebrew/bin/g++-14",
+    "C_Cpp.default.intelliSenseMode": "macos-gcc-arm64",
+    "C_Cpp.default.includePath": ["/opt/homebrew/Cellar/gcc/14.2.0_1/include"],
     "C_Cpp.dimInactiveRegions": false,
     "C_Cpp.autocompleteAddParentheses": true,
     "C_Cpp.default.browse.limitSymbolsToIncludedHeaders": false,
-    "C_Cpp.default.cppStandard": "c++17",
+    "C_Cpp.default.cppStandard": "c++20",
     "editor.defaultFormatter": "ms-vscode.cpptools",
-    "terminal.integrated.shellIntegration.suggestEnabled": true,
-    "C_Cpp.formatting": "vcFormat"
+    "C_Cpp.formatting": "vcFormat",
+    "terminal.integrated.env.osx": {
+        "CPLUS_INCLUDE_PATH":"${env:HOME}/CP/include",
+        "C_INCLUDE_PATH":"${env:HOME}/CP/include"
+    },
+    "terminal.integrated.env.linux": {
+        "CPLUS_INCLUDE_PATH":"${env:HOME}/CP/include",
+        "C_INCLUDE_PATH":"${env:HOME}/CP/include"
+    },
+    "code-runner.executorMapByGlob": {
+        "pom.xml": "cd $dir && mvn clean package"
+    },
+    "code-runner.executorMap": {
+        "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    },
+    "code-runner.runInTerminal": true
 }
